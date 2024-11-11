@@ -8,36 +8,126 @@
             width: 800px;
             margin: auto;
         }
+
+        .booked {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 10px;
+            border: 2px solid blanchedalmond;
+            font-weight: bold;
+        }
+
+        .infoBooked {
+            margin: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .event-item {
+            margin: 15px 0;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .sections{
+            border: 1px solid black;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
 <header>
-    <h1>Welcome to our Event Booking App</h1>
+    <h1>Welcome to our Event Booking App <span th:text="${username}"></span></h1>
 </header>
 <main>
-    <h2>Search Events:</h2>
-    <form action="/" method="get">
-        <label for="searchText">Event Name:</label>
-        <input type="text" name="searchText" id="searchText"><br/>
-        <input type="submit" value="Search">
-    </form>
+    <div class="event-actions">
+        <!-- Search Events -->
+        <div class="sections">
+            <h2>Choose an Event:</h2>
 
-    <h2>Choose an event:</h2>
-    <form action="/eventBooking" method="post">
-        <label for="atName">Attendee Name
-            <input id="atName" type="text" name="attendeeName"/>
-        </label>
-        <div th:each="event : ${events}">
-            <input type="radio" name="eventName" th:value="${event.name}"/>
-            <span>Name: <span th:text="${event.name}"></span>,
-                      Description: <span th:text="${event.description}"></span>,
-                      Rating: <span th:text="${event.popularityScore}"></span>
-                </span><br/>
+            <!-- Booking Form for selecting an event and number of tickets -->
+            <form action="/eventBooking" method="post">
+                <div th:each="event : ${events}" class="event-item">
+                    <!-- Radio button for selecting the event for booking -->
+                    <input type="radio" name="eventId" th:value="${event.id}" required/>
+                    <div class="event-info">
+                <span>
+                    Name: <span th:text="${event.name}"></span>,
+                    Description: <span th:text="${event.description}"></span>,
+                    Rating: <span th:text="${event.popularityScore}"></span>,
+                    Location: <span th:text="${event.location.name}"></span>
+                </span>
+                    </div>
+                </div>
+
+                <!-- Ticket selection inside the booking form -->
+                <h2>Choose number of tickets:</h2>
+                <input type="number" name="numberOfTickets" min="1" max="10" required><br/>
+                <input type="submit" value="Book Event">
+            </form>
         </div>
-        <h2>Choose number of tickets:</h2>
-        <input type="number" name="numberOfTickets" min="1" max="10"><br/>
-        <input type="submit" value="Submit">
-    </form>
+        <div class="sections">
+
+            <!-- Event Management Actions (Edit/Delete) -->
+            <h2>Manage Events:</h2>
+            <div th:each="event : ${events}" class="event-item">
+                <div class="event-info">
+            <span>
+                Name: <span th:text="${event.name}"></span>,
+                Description: <span th:text="${event.description}"></span>,
+                Rating: <span th:text="${event.popularityScore}"></span>,
+                Location: <span th:text="${event.location.name}"></span>
+            </span>
+                </div>
+
+                <div class="event-actions">
+                    <!-- Edit button -->
+                    <a th:href="@{/events/edit/{id}(id=${event.id})}">
+                        <button type="button">Edit</button>
+                    </a>
+
+                    <!-- Delete form -->
+                    <form th:action="@{/events/delete/{id}(id=${event.id})}" method="post" style="display: inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this event?');">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- Button to Add a New Event -->
+            <br/>
+            <a href="/events/add-event">
+                <button type="button">Add New Event</button>
+            </a>
+        </div>
+        <!-- Booked Events Section -->
+    </div>
+    <br/>
+    <h1>Events Booked</h1>
+    <div th:each="b : ${eventsBooked}" class="booked">
+        <div class="infoBooked">
+            <span>Attendee name: </span>
+            <p th:text="${b.attendeeName}"></p>
+        </div>
+        <div class="infoBooked">
+            <span>Attendee address:</span>
+            <p th:text="${b.attendeeAddress}"></p>
+        </div>
+        <div class="infoBooked">
+            <span>Event name: </span>
+            <p th:text="${b.eventName}"></p>
+        </div>
+        <div class="infoBooked">
+            <span>Number of tickets:</span>
+            <p th:text="${b.numberOfTickets}"></p>
+        </div>
+    </div>
 </main>
 </body>
 </html>
