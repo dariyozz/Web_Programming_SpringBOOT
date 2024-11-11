@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add or Edit Event</title>
+    <script>
+        function setFormAction() {
+            const form = document.getElementById('eventForm');
+            const eventId = document.getElementById('eventId').value;
+            if (eventId) {
+                form.action = '/events/edit/' + eventId;
+            } else {
+                form.action = '/events/add';
+            }
+        }
+    </script>
+</head>
+<body onload="setFormAction()">
+<h1 th:text="${event != null and event.id != null} ? 'Edit Event' : 'Add New Event'"></h1>
+<form id="eventForm" method="post">
+    <input type="hidden" id="eventId" th:value="${event != null} ? ${event.id} : ''"/>
+    <!-- Event Name -->
+    <label for="name">Event Name:</label>
+    <input type="text" id="name" name="name" th:value="${event != null} ? ${event.name} : ''" required><br/>
+
+    <!-- Event Description -->
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" th:text="${event != null} ? ${event.description} : ''"></textarea><br/>
+
+    <!-- Event Popularity Score -->
+    <label for="popularityScore">Popularity Score:</label>
+    <input type="number" id="popularityScore" name="popularityScore" th:value="${event != null} ? ${event.popularityScore} : ''" min="0" max="1000" required><br/>
+
+    <!-- Location Dropdown -->
+    <label for="location">Location:</label>
+    <select id="location" name="locationId" required>
+        <option value="" disabled selected>Select a location</option>
+        <option th:each="location : ${locations}"
+                th:value="${location.id}"
+                th:text="${location.name}">
+
+        </option>
+    </select>
+    <br/>
+
+    <!-- Submit Button -->
+    <button type="submit">Save Event</button>
+</form>
+</body>
+</html>
