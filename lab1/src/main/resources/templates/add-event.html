@@ -3,6 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <title>Add or Edit Event</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="text"], input[type="number"] {
+            height: 40px;
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        button[type="submit"]:active {
+            background-color: #004085;
+        }
+
+        select {
+            height: 45px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group select,
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+    </style>
     <script>
         function setFormAction() {
             const form = document.getElementById('eventForm');
@@ -16,35 +122,39 @@
     </script>
 </head>
 <body onload="setFormAction()">
-<h1 th:text="${event != null and event.id != null} ? 'Edit Event' : 'Add New Event'"></h1>
-<form id="eventForm" method="post">
-    <input type="hidden" id="eventId" th:value="${event != null} ? ${event.id} : ''"/>
-    <!-- Event Name -->
-    <label for="name">Event Name:</label>
-    <input type="text" id="name" name="name" th:value="${event != null} ? ${event.name} : ''" required><br/>
+<div class="container">
+    <h1 th:text="${event != null and event.id != null} ? 'Edit Event' : 'Add New Event'"></h1>
+    <form id="eventForm" method="post">
+        <input type="hidden" id="eventId" th:value="${event != null} ? ${event.id} : ''"/>
 
-    <!-- Event Description -->
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" th:text="${event != null} ? ${event.description} : ''"></textarea><br/>
+        <div class="form-group">
+            <label for="name">Event Name:</label>
+            <input type="text" id="name" name="name" th:value="${event != null} ? ${event.name} : ''" required />
+        </div>
 
-    <!-- Event Popularity Score -->
-    <label for="popularityScore">Popularity Score:</label>
-    <input type="number" id="popularityScore" name="popularityScore" th:value="${event != null} ? ${event.popularityScore} : ''" min="0" max="1000" required><br/>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" th:text="${event != null} ? ${event.description} : ''"></textarea>
+        </div>
 
-    <!-- Location Dropdown -->
-    <label for="location">Location:</label>
-    <select id="location" name="locationId" required>
-        <option value="" disabled selected>Select a location</option>
-        <option th:each="location : ${locations}"
-                th:value="${location.id}"
-                th:text="${location.name}">
+        <div class="form-group">
+            <label for="popularityScore">Popularity Score:</label>
+            <input type="number" id="popularityScore" name="popularityScore" th:value="${event != null} ? ${event.popularityScore} : ''" min="0" max="1000" required />
+        </div>
 
-        </option>
-    </select>
-    <br/>
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <select id="location" name="locationId" required>
+                <option value="" disabled selected>Select a location</option>
+                <option th:each="location : ${locations}"
+                        th:value="${location.id}"
+                        th:text="${location.name}">
+                </option>
+            </select>
+        </div>
 
-    <!-- Submit Button -->
-    <button type="submit">Save Event</button>
-</form>
+        <button type="submit">Save Event</button>
+    </form>
+</div>
 </body>
 </html>

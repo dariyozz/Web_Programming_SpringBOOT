@@ -4,40 +4,154 @@
     <meta charset="UTF-8">
     <title>Event Booking - Choose an Event</title>
     <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            width: 800px;
-            margin: auto;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            width: 85%;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .booked {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            margin: 10px;
-            border: 2px solid blanchedalmond;
-            font-weight: bold;
+        header {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .infoBooked {
-            margin: 10px;
-            justify-content: center;
-            align-items: center;
+        header h1 {
+            font-size: 2.5em;
+            color: #007bff;
+        }
+
+        header h1 span {
+            font-weight: normal;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .sections {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sections h2 {
+            color: #007bff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
         }
 
         .event-item {
-            margin: 15px 0;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-info {
+            font-size: 1em;
+            color: #555;
+            line-height: 1.6;
         }
 
         .event-actions {
             display: flex;
-            gap: 10px;
+            gap: 15px;
+            margin-top: 10px;
         }
-        .sections{
-            border: 1px solid black;
-            padding: 10px;
+
+        .event-actions button {
+            padding: 8px 16px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .event-actions button:hover {
+            background-color: #0056b3;
+        }
+
+        .event-actions form {
+            display: inline;
+        }
+
+        .booked {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .infoBooked {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 8px;
+            width: 45%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .infoBooked p {
+            font-size: 1em;
+            color: #444;
+            margin-top: 8px;
+        }
+
+        .infoBooked span {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        form input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        form input[type="submit"] {
+            padding: 12px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        form input[type="submit"]:active {
+            background-color: #1e7e34;
+        }
+
+        .booked h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
         }
     </style>
 </head>
