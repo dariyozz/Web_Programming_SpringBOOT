@@ -4,160 +4,245 @@
     <meta charset="UTF-8">
     <title>Event Booking - Choose an Event</title>
     <style>
-        /* Basic Reset */
+        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7fa;
-            color: #333;
-            width: 85%;
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --background-light: #f4f6f7;
+            --text-dark: #2c3e50;
+            --border-color: #e0e4e8;
+            --shadow-light: rgba(0, 0, 0, 0.05);
         }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
         header {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px var(--shadow-light);
             margin-bottom: 30px;
         }
 
         header h1 {
-            font-size: 2.5em;
-            color: #007bff;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
         }
 
         header h1 span {
-            font-weight: normal;
-            font-size: 0.9em;
-            color: #555;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
         }
 
-        .sections {
-            background-color: #f9f9f9;
+        header a button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
             border-radius: 8px;
-            margin: 20px 0;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .sections h2 {
-            color: #007bff;
-            font-size: 1.8em;
-            margin-bottom: 15px;
+        header a button:hover {
+            background-color: #2980b9;
         }
 
-        .event-item {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .event-item:last-child {
-            border-bottom: none;
-        }
-
-        .event-info {
-            font-size: 1em;
-            color: #555;
-            line-height: 1.6;
+        /* Main Sections */
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         .event-actions {
             display: flex;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .event-actions button {
-            padding: 8px 16px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .event-actions button:hover {
-            background-color: #0056b3;
-        }
-
-        .event-actions form {
-            display: inline;
-        }
-
-        .booked {
-            display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             gap: 20px;
-            margin-top: 30px;
         }
 
-        .infoBooked {
-            background-color: #f1f1f1;
+        /* Shared Section Styles */
+        .sections {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            padding: 20px;
+            flex: 1;
+        }
+
+        .sections h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        /* Event Items */
+        .event-item {
+            display: flex;
+            align-items: center;
             padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            width: 45%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
         }
 
-        .infoBooked p {
-            font-size: 1em;
-            color: #444;
-            margin-top: 8px;
+        .event-item:hover {
+            background-color: #f9f9f9;
         }
 
-        .infoBooked span {
-            font-weight: bold;
-            color: #007bff;
+        .event-info {
+            flex-grow: 1;
         }
 
+        .event-info span {
+            display: block;
+            color: var(--text-dark);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        /* Form Styles */
         form input[type="number"] {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1em;
+            width: 100%;
+            padding: 10px;
             margin-top: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
         }
 
         form input[type="submit"] {
-            padding: 12px 20px;
-            background-color: #28a745;
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background-color: var(--secondary-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 15px;
+            transition: background-color 0.3s ease;
         }
 
         form input[type="submit"]:hover {
-            background-color: #218838;
+            background-color: #27ae60;
         }
 
-        form input[type="submit"]:active {
-            background-color: #1e7e34;
+        /* Booked Events Section */
+        .booked {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
 
-        .booked h1 {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 20px;
+        .infoBooked {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            transition: transform 0.3s ease;
+        }
+
+        .infoBooked:hover {
+            transform: translateY(-2px);
+        }
+
+        .infoBooked span {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .event-actions {
+                flex-direction: column;
+            }
+
+            .sections {
+                padding: 15px;
+            }
         }
     </style>
+
 </head>
 <body>
 <header>
-    <h1>Welcome to our Event Booking App <span th:text="${username}"></span></h1>
+    <h1>Welcome to our Event Booking App <img src="/profile-pic.jpg" alt="Profile Picture"
+                                              style="width:30px; height:30px; border-radius:50%; vertical-align:middle;">
+        <span th:text="${username}"></span></h1>
+    <div th:if="${!username.equals('Unknown') }">
+        <a href="/logout">
+            <button type="button">Logout</button>
+        </a>
+    </div>
+    <div th:if="${username == null || username.equals('Unknown')}">
+        <a href="/login">
+            <button type="button">Login</button>
+        </a>
+    </div>
 </header>
 <main>
     <div class="event-actions">
@@ -169,21 +254,21 @@
             <form action="/eventBooking" method="post">
                 <div th:each="event : ${events}" class="event-item">
                     <!-- Radio button for selecting the event for booking -->
-                    <input type="radio" name="eventId" th:value="${event.id}" required/>
-                    <div class="event-info">
-                <span>
-                    Name: <span th:text="${event.name}"></span>,
-                    Description: <span th:text="${event.description}"></span>,
-                    Rating: <span th:text="${event.popularityScore}"></span>,
-                    Location: <span th:text="${event.location.name}"></span>
-                </span>
-                    </div>
-                </div>
+                    <input type="radio" th:id="'event-' + ${event.id}" name="eventId" th:value="${event.id}" required/>
 
+                    <label th:for="'event-' + ${event.id}" class="event-info">
+                              <span>
+                            <strong>Name:</strong> <span th:text="${event.name}"></span><br>
+                            <strong>Description:</strong> <span th:text="${event.description}"></span><br>
+                            <strong>Rating:</strong> <span th:text="${event.popularityScore}"></span><br>
+                            <strong>Location:</strong> <span th:text="${event.location.name}"></span>
+                </span>
+                    </label>
+                </div>
                 <!-- Ticket selection inside the booking form -->
                 <h2>Choose number of tickets:</h2>
-                <input type="number" name="numberOfTickets" min="1" max="10" required><br/>
-                <input type="submit" value="Book Event">
+                <input type="number" name="numberOfTickets" min="1" max="10" required class="ticket-input"/><br/>
+                <input type="submit" value="Book Event" class="submit-btn">
             </form>
         </div>
         <div class="sections">
@@ -193,35 +278,42 @@
             <div th:each="event : ${events}" class="event-item">
                 <div class="event-info">
             <span>
-                Name: <span th:text="${event.name}"></span>,
-                Description: <span th:text="${event.description}"></span>,
-                Rating: <span th:text="${event.popularityScore}"></span>,
-                Location: <span th:text="${event.location.name}"></span>
+                        <strong>Name:</strong> <span th:text="${event.name}"></span><br>
+                        <strong>Description:</strong> <span th:text="${event.description}"></span><br>
+                        <strong>Rating:</strong> <span th:text="${event.popularityScore}"></span><br>
+                        <strong>Location:</strong> <span th:text="${event.location.name}"></span>
             </span>
                 </div>
 
                 <div class="event-actions">
                     <!-- Edit button -->
                     <a th:href="@{/events/edit/{id}(id=${event.id})}">
-                        <button type="button">Edit</button>
+                        <button type="button" class="btn btn-primary">Edit</button>
                     </a>
 
                     <!-- Delete form -->
                     <form th:action="@{/events/delete/{id}(id=${event.id})}" method="post" style="display: inline;">
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this event?');">
+                        <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this event?');">
                             Delete
                         </button>
                     </form>
+
+                    <!-- Details button -->
+                    <a th:href="@{/events/details/{id}(id=${event.id})}">
+                        <button type="button" class="btn btn-secondary">Details</button>
+                    </a>
                 </div>
             </div>
-            <!-- Button to Add a New Event -->
-            <br/>
-            <a href="/events/add-event">
-                <button type="button">Add New Event</button>
-            </a>
         </div>
-        <!-- Booked Events Section -->
+        <!-- Button to Add a New Event -->
+        <br/>
+        <a href="/events/add-event">
+            <button type="button" class="btn btn-primary">Add New Event</button>
+        </a>
     </div>
+    <!-- Booked Events Section -->
+
     <br/>
     <h1>Events Booked</h1>
     <div th:each="b : ${eventsBooked}" class="booked">

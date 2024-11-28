@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<body>
+<div class="bg-gray-100 min-h-screen p-6">
+    <!-- Event Details Section -->
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Event Details</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="text-gray-600">
+                <strong class="block text-gray-800">Name:</strong>
+                <span th:text="${event.name}"></span>
+            </div>
+            <div class="text-gray-600">
+                <strong class="block text-gray-800">Description:</strong>
+                <span th:text="${event.description}"></span>
+            </div>
+            <div class="text-gray-600">
+                <strong class="block text-gray-800">Rating:</strong>
+                <span th:text="${event.popularityScore}"></span>
+            </div>
+            <div class="text-gray-600">
+                <strong class="block text-gray-800">Location:</strong>
+                <span th:text="${event.location.name}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Section -->
+    <section th:each="booking : ${eventsBooked}" class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+        <header class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Booking Confirmations</h1>
+        </header>
+        <table class="table-auto w-full text-left border-collapse">
+            <thead>
+            <tr>
+                <th colspan="2" class="bg-gray-200 text-gray-800 text-lg font-semibold py-2 px-4 rounded-t-md">
+                    Your Booking Status
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border-t border-gray-200">
+                <td class="py-2 px-4 font-semibold text-gray-700">Attendee Name</td>
+                <td class="py-2 px-4 text-gray-600" th:text="${booking.attendeeName}"></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+                <td class="py-2 px-4 font-semibold text-gray-700">Client IP Address</td>
+                <td class="py-2 px-4 text-gray-600" th:text="${booking.attendeeAddress}"></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+                <td class="py-2 px-4 font-semibold text-gray-700">Booking for Event</td>
+                <td class="py-2 px-4 text-gray-600" th:text="${booking.eventName}"></td>
+            </tr>
+            <tr class="border-t border-gray-200">
+                <td class="py-2 px-4 font-semibold text-gray-700">Number of Tickets</td>
+                <td class="py-2 px-4 text-gray-600" th:text="${booking.numberOfTickets}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+</body>
+</html>

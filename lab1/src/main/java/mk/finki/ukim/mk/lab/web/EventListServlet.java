@@ -17,7 +17,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "eventListServlet", urlPatterns = "/listEvents")
+//@WebServlet(name = "eventListServlet", urlPatterns = "/listEvents")
 public class EventListServlet extends HttpServlet {
 
     private final EventService eventService;
@@ -44,10 +44,6 @@ public class EventListServlet extends HttpServlet {
             events = eventService.listAll();  // Get all events if no search criteria are provided
         }
 
-        if (events.isEmpty()) {
-            resp.getWriter().write("<h1>No events found</h1>");
-            return;
-        }
         List<EventBooking> eventsBooked = eventBookingService.eventsBooked();
         // Prepare the WebContext for Thymeleaf rendering
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())

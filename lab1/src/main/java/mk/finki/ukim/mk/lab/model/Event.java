@@ -1,5 +1,7 @@
 package mk.finki.ukim.mk.lab.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,16 +10,21 @@ import lombok.Value;
 import java.util.Random;
 import java.util.UUID;
 
+import jakarta.persistence.*;
+
 @Data
+@Entity
 public class Event {
-    private String Id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private String name;
     private String description;
     private double popularityScore;
+    @ManyToOne
     private Location location;
 
     public Event(String name, String description, double popularityScore, Location location) {
-        Id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.popularityScore = popularityScore;
@@ -25,6 +32,5 @@ public class Event {
     }
 
     public Event() {
-        Id = UUID.randomUUID().toString();
     }
 }

@@ -25,7 +25,7 @@ public class EventBookingServiceImpl implements EventBookingService {
             check.setNumberOfTickets(check.getNumberOfTickets() + eventBooking.getNumberOfTickets());
             return check;
         }
-        eventBookingRepository.add(eventBooking);
+        eventBookingRepository.save(eventBooking);
         return eventBooking;
     }
 

@@ -1,53 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Booking - Confirmation</title>
-    <style type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Booking - Confirmation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reuse the previous CSS variables and reset */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-light: #f4f6f7;
+            --text-dark: #2c3e50;
+            --border-color: #e0e4e8;
+        }
+
         body {
-            width: 800px;
-            margin: auto;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--background-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
         }
-        table {
+
+        .confirmation-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 40px;
             width: 100%;
-            border-collapse: collapse;
+            max-width: 500px;
         }
-        table, td, th {
-            border: 1px solid black;
-            padding: 5px;
+
+        .confirmation-header {
+            text-align: center;
+            margin-bottom: 30px;
         }
-        th {
-            background-color: #f2f2f2;
+
+        .confirmation-header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .booking-details {
+            background-color: var(--background-light);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .booking-details table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .booking-details th,
+        .booking-details td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .booking-details th {
+            color: var(--primary-color);
+            width: 40%;
+        }
+
+        .booking-details td {
+            color: var(--text-dark);
+        }
+
+        .btn-return {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-return:hover {
+            background-color: #27ae60;
         }
     </style>
 </head>
 <body>
-<section>
-    <header>
-        <h1>Event Booking Page - Booking Confirmation</h1>
-    </header>
-    <table>
-        <tr>
-            <th colspan="2">Your Booking Status</th>
-        </tr>
-        <tr>
-            <td><b>Attendee Name</b></td>
-            <td th:text="${booking.attendeeName}"></td>
-        </tr>
-        <tr>
-            <td><b>Client IP Address</b></td>
-            <td th:text="${booking.attendeeAddress}"></td>
-        </tr>
-        <tr>
-            <td><b>Booking for Event</b></td>
-            <td th:text="${booking.eventName}"></td>
-        </tr>
-        <tr>
-            <td><b>Number of Tickets</b></td>
-            <td th:text="${booking.numberOfTickets}"></td>
-        </tr>
-    </table>
-</section>
+<div class="confirmation-container">
+    <div class="confirmation-header">
+        <h1>Booking Confirmation</h1>
+    </div>
+    <div class="booking-details">
+        <table>
+            <tr>
+                <th>Attendee Name</th>
+                <td th:text="${booking.attendeeName}">John Doe</td>
+            </tr>
+            <tr>
+                <th>Client IP Address</th>
+                <td th:text="${booking.attendeeAddress}">192.168.1.100</td>
+            </tr>
+            <tr>
+                <th>Booking for Event</th>
+                <td th:text="${booking.eventName}">Summer Music Festival</td>
+            </tr>
+            <tr>
+                <th>Number of Tickets</th>
+                <td th:text="${booking.numberOfTickets}">2</td>
+            </tr>
+        </table>
+    </div>
+    <a href="/events/all" class="btn-return">Return to Events</a>
+</div>
 </body>
 </html>

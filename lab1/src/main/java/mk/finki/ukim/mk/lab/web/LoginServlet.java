@@ -13,7 +13,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import java.io.IOException;
 
-@WebServlet(name = "loginServlet", urlPatterns = "")
+//@WebServlet(name = "loginServlet", urlPatterns = "")
 public class LoginServlet extends HttpServlet {
 
     private final SpringTemplateEngine templateEngine;
@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
                 .buildExchange(req, resp);
         WebContext context = new WebContext(webExchange);
 
-        resp.sendRedirect("/listEvents");
+        resp.sendRedirect("/events/all");
     }
 }
 
