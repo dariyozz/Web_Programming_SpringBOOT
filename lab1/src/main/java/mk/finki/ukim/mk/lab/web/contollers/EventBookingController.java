@@ -1,6 +1,7 @@
 package mk.finki.ukim.mk.lab.web.contollers;
 
 import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import mk.finki.ukim.mk.lab.model.Event;
 import mk.finki.ukim.mk.lab.model.EventBooking;
@@ -26,11 +27,11 @@ public class EventBookingController {
     public String placeBooking(@RequestParam String eventId,
                                @RequestParam int numberOfTickets,
                                HttpSession session,
-                               ServletRequest req,
+                               HttpServletRequest req,
                                Model model) {
         Event event = eventService.findById(eventId);
         String eventName = event.getName();
-        String attendeeName = session.getAttribute("username") == null ? "Unknown" : session.getAttribute("username").toString();
+        String attendeeName = req.getRemoteUser();
         String attendeeAddress = req.getRemoteAddr();
 
         EventBooking booking = bookingService.placeBooking(eventName, attendeeName, attendeeAddress, numberOfTickets);

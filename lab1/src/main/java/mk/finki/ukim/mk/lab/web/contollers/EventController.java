@@ -1,5 +1,6 @@
 package mk.finki.ukim.mk.lab.web.contollers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import mk.finki.ukim.mk.lab.model.Event;
 import mk.finki.ukim.mk.lab.model.EventBooking;
@@ -27,9 +28,9 @@ public class EventController {
     }
 
     @GetMapping("/all")
-    public String getEventsPage(@RequestParam(required = false) String error, HttpSession httpSession, Model model) {
+    public String getEventsPage(@RequestParam(required = false) String error, HttpServletRequest req, Model model) {
         List<Event> events = eventService.listAll();
-        String username = httpSession.getAttribute("username") == null ? "Unknown" : httpSession.getAttribute("username").toString();
+        String username = req.getRemoteUser();
         List<EventBooking> eventsBooked = eventBookingService.eventsBooked().stream().filter(e -> e.getAttendeeName().equals(username)).toList();
 
         model.addAttribute("eventsBooked", eventsBooked);
@@ -49,7 +50,7 @@ public class EventController {
     public String saveEvent(@RequestParam String name, @RequestParam String description,
                             @RequestParam Integer popularityScore, @RequestParam String locationId) {
         eventService.save(name, description, popularityScore, locationId);
-        return "redirect:/listEvents";
+        return "redirect:/events/all";
     }
 
     @GetMapping("/edit/{eventId}")
@@ -74,15 +75,15 @@ public class EventController {
 
     @PostMapping("/edit/{eventId}")
     public String editEvent(@PathVariable String eventId, @RequestParam String name,
-                            @RequestParam String description, @RequestParam Integer popularityScore,
+                            @RequestParam String description, @RequestParam Double popularityScore,
                             @RequestParam String locationId) {
         eventService.update(eventId, name, description, popularityScore, locationId);
-        return "redirect:/listEvents";
+        return "redirect:/events/all";
     }
 
     @PostMapping("/delete/{eventId}")
     public String deleteEvent(@PathVariable String eventId) {
         eventService.delete(eventId);
-        return "redirect:/listEvents";
+        return "redirect:/events/all";
     }
 }

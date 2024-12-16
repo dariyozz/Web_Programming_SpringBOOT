@@ -1,10 +1,11 @@
-package mk.finki.ukim.mk.lab.service;
+package mk.finki.ukim.mk.lab.service.ServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 import mk.finki.ukim.mk.lab.model.Event;
 import mk.finki.ukim.mk.lab.model.Location;
 import mk.finki.ukim.mk.lab.repository.EventRepository;
 import mk.finki.ukim.mk.lab.repository.LocationRepository;
+import mk.finki.ukim.mk.lab.service.EventService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findById(eventId).orElse(null);
     }
 
-    public void update(String eventId, String name, String description, Integer popularityScore, String locationId) {
+    public void update(String eventId, String name, String description, Double popularityScore, String locationId) {
         Event event = findById(eventId);
         if (event == null) return;
         event.setDescription(description);

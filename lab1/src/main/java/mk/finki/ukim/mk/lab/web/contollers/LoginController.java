@@ -1,62 +1,51 @@
 package mk.finki.ukim.mk.lab.web.contollers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import mk.finki.ukim.mk.lab.enums.Role;
 import mk.finki.ukim.mk.lab.model.User;
-import mk.finki.ukim.mk.lab.repository.UserRepository;
 import mk.finki.ukim.mk.lab.service.AuthService;
 import mk.finki.ukim.mk.lab.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
+@RequestMapping("/login")
 public class LoginController {
-
     private final AuthService authService;
-    private final UserService userService;
-
-    public LoginController(AuthService authService, UserService userService) {
+    public LoginController(AuthService authService) {
         this.authService = authService;
-        this.userService = userService;
     }
 
-    @GetMapping(value = {"/login", "/"})
-    public String showLoginForm(HttpSession session) {
-        if (session.getAttribute("username") != null) {
-            return "redirect:/events/all";
-        }
+    //@RequestMapping(method = RequestMethod.GET, value = "/login")
+    @GetMapping
+    public String getLoginPage() {
+        // Return the name of the Thymeleaf template that will be used to render the login page
         return "login";
     }
 
+    @PostMapping("/perform_login")
+    public String login(HttpServletRequest request, Model model) {
+        User user = null;
 
-    @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
-        if (authService.authenticate(username, password)) {
-            session.setAttribute("username", username);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        try {
+            user = authService.login(username, password);
+            request.getSession().setAttribute("user", user);
+            // Redirect to the home page
             return "redirect:/events/all";
-        } else {
-            model.addAttribute("error", "Invalid username or password");
+        } catch (RuntimeException ex) {
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", ex.getMessage());
             return "login";
         }
     }
-
-    @PostMapping("/register")
-    public String register(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
-        if (userService.findByUsername(username).isPresent()) {
-            model.addAttribute("error", "username already exists !");
-            return "redirect:/login";
-        }
-        userService.addUser(new User(username, password));
-        session.setAttribute("username", username);
-        return "redirect:/events/all";
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
-        httpSession.invalidate();
-        return "redirect:/login";
-    }
 }
+

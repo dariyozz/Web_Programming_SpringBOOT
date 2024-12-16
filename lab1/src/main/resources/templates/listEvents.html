@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Event Booking - Choose an Event</title>
@@ -232,8 +232,9 @@
 <header>
     <h1>Welcome to our Event Booking App <img src="/profile-pic.jpg" alt="Profile Picture"
                                               style="width:30px; height:30px; border-radius:50%; vertical-align:middle;">
-        <span th:text="${username}"></span></h1>
-    <div th:if="${!username.equals('Unknown') }">
+        <span th:text="${username}"></span>
+    </h1>
+    <div th:if="${username != null } ">
         <a href="/logout">
             <button type="button">Logout</button>
         </a>
@@ -287,12 +288,13 @@
 
                 <div class="event-actions">
                     <!-- Edit button -->
-                    <a th:href="@{/events/edit/{id}(id=${event.id})}">
+                    <a th:href="@{/events/edit/{id}(id=${event.id})}" sec:authorize="hasRole('ROLE_ADMIN')">
                         <button type="button" class="btn btn-primary">Edit</button>
                     </a>
 
                     <!-- Delete form -->
-                    <form th:action="@{/events/delete/{id}(id=${event.id})}" method="post" style="display: inline;">
+                    <form th:action="@{/events/delete/{id}(id=${event.id})}" method="post" style="display: inline;"
+                          sec:authorize="hasRole('ROLE_ADMIN')">
                         <button type="submit" class="btn btn-danger"
                                 onclick="return confirm('Are you sure you want to delete this event?');">
                             Delete
@@ -308,7 +310,7 @@
         </div>
         <!-- Button to Add a New Event -->
         <br/>
-        <a href="/events/add-event">
+        <a href="/events/add-event" sec:authorize="hasRole('ROLE_ADMIN')">
             <button type="button" class="btn btn-primary">Add New Event</button>
         </a>
     </div>

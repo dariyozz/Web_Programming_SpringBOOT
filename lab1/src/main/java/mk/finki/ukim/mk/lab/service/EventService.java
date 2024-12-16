@@ -13,7 +13,7 @@ public interface EventService {
 
     Event findById(String eventId);
 
-    void update(String eventId, String name, String description, Integer popularityScore, String locationId);
+    void update(String eventId, String name, String description, Double popularityScore, String locationId);
 
     void delete(String id);
 

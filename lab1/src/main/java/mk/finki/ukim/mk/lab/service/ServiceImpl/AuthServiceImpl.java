@@ -1,6 +1,7 @@
 package mk.finki.ukim.mk.lab.service.ServiceImpl;
 
 
+import mk.finki.ukim.mk.lab.exceptions.InvalidArgumentsException;
 import mk.finki.ukim.mk.lab.model.User;
 import mk.finki.ukim.mk.lab.repository.UserRepository;
 import mk.finki.ukim.mk.lab.service.AuthService;
@@ -12,14 +13,19 @@ import java.util.Optional;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    public AuthServiceImpl(UserService userService) {
-        this.userService = userService;
+    public AuthServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public boolean authenticate(String username, String password) {
-        Optional<User> user = userService.findByUsername(username);
-        return user.isPresent() && user.get().getPassword().equals(password);
+    @Override
+    public User login(String username, String password) {
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            throw new InvalidArgumentsException();
+        }
+        return userRepository.findByUsernameAndPassword(username, password)
+                .orElseThrow(InvalidArgumentsException::new);
+
     }
 }
